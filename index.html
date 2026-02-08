@@ -25,39 +25,74 @@
             min-height: 100vh;
         }
 
-        /* --- Header Styles --- */
+        /* --- Header Styles (Centered Links Fix) --- */
         .header-nav {
             position: sticky;
             top: 0;
             width: 100%;
             height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             border-bottom: 1px solid #E5E7EB;
             background-color: white;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: center;
         }
 
         .header-inner {
             width: 100%;
-            /* Matches main-container max-width for consistency */
             max-width: 1280px; 
+            height: 100%;
             padding: 0 40px;
             display: flex;
             align-items: center;
-            /* Default: spread apart (Logo Left, Tools Right) */
             justify-content: space-between;
-            position: relative; /* Needed for absolute logo positioning on desktop */
         }
 
-        /* Logo Styling */
+        /* Pushes logo to left, takes up space to balance the right side */
+        .logo-area {
+            flex: 1;
+            display: flex;
+            justify-content: flex-start;
+            margin-left: 10%;
+        }
+
         .logo-container {
             font-size: 32px; 
-            font-weight: 600; 
+            font-weight: 700; 
             color: #2563EB;
-            /* Default: In flow for mobile */
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        /* Centered Nav Links */
+        .nav-links-group {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            justify-content: center;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+            white-space: nowrap;
+        }
+        
+        .nav-link:hover {
+            color: #2563EB;
+        }
+
+        /* Pushes profile to right, balances the left side */
+        .profile-area {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 24px;
         }
 
         /* --- Main Layout --- */
@@ -72,7 +107,6 @@
             align-items: center;
         }
 
-        /* Desktop: Side-by-Side Layout & Logo Alignment */
         @media (min-width: 1024px) {
             .main-container {
                 flex-direction: row;
@@ -81,33 +115,15 @@
                 gap: 80px;
                 padding-top: 80px;
             }
-
-            .text-section {
-                width: 320px;
-            }
-
-            /* UPDATED LOGO POSITIONING based on image_6.png:
-               Aligns the logo with the start of the 'text-section'.
-               Calculation: 
-               - Content Cluster Width = 320px (Text) + 80px (Gap) + 422px (Form) = 822px.
-               - Center of Page to Start of Content = 822px / 2 = 411px.
-               - Logo Left Position = 50% (Center) - 411px.
-            */
-            .logo-container {
-                position: absolute;
-                left: 50%;
-                margin-left: -511px; /* Moves logo left from center by half the content width */
-                white-space: nowrap;
-            }
+            .text-section { width: 320px; }
         }
 
-        /* Mobile Layout Adjustments */
         @media (max-width: 1023px) {
             .header-nav { height: 60px; }
             .header-inner { padding: 0 20px; }
             .main-container { padding: 40px 20px 60px 20px; }
             .text-section { width: 100%; text-align: center; margin-bottom: 32px; }
-            /* Logo stays in default flex position on mobile */
+            .hide-mobile { display: none; }
         }
 
         /* --- Form Styles --- */
@@ -119,10 +135,6 @@
             padding: 24px;
             background: white;
             box-shadow: 0 10px 30px rgba(37, 99, 235, 0.03);
-        }
-
-        @media (min-width: 640px) {
-            .form-container { padding: 28px; }
         }
 
         .input-field {
@@ -137,24 +149,9 @@
             color: #111827;
         }
         
-        @media(min-width: 1024px) {
-            .input-field { font-size: 13px; padding: 10px 12px; }
-        }
-
-        .input-field:focus { 
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
-        }
-
-        .input-field.error {
-            border-color: var(--error-red) !important;
-            background-color: #FEF2F2;
-        }
-        
-        .input-field.error:focus {
-            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
-        }
-
+        @media(min-width: 1024px) { .input-field { font-size: 13px; } }
+        .input-field:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15); }
+        .input-field.error { border-color: var(--error-red) !important; background-color: #FEF2F2; }
         .label-text { font-size: 11px; color: var(--label-gray); margin-bottom: 4px; display: block; font-weight: 500; }
         
         select {
@@ -165,63 +162,39 @@
             background-size: 14px;
         }
 
-        /* --- Footer Styles --- */
-        .footer-section {
-            width: 100%;
-            background: #FAFAFA;
-            border-top: 1px solid #F3F4F6;
-        }
-
-        .footer-inner {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        @media (min-width: 1024px) {
-            .footer-section { background: #FFFFFF; }
-            .footer-inner {
-                flex-direction: row;
-                justify-content: space-between;
-                text-align: left;
-                padding: 40px; 
-            }
-        }
-
-        .hide-mobile { display: none; }
-        @media (min-width: 1024px) { .hide-mobile { display: block; } }
+        .footer-section { width: 100%; background: #FAFAFA; border-top: 1px solid #F3F4F6; }
+        .footer-inner { max-width: 1280px; margin: 0 auto; padding: 30px 20px; display: flex; flex-direction: column; align-items: center; }
+        @media (min-width: 1024px) { .footer-section { background: #FFFFFF; } .footer-inner { flex-direction: row; justify-content: space-between; padding: 40px; } }
     </style>
 </head>
 <body>
 
     <header class="header-nav">
         <div class="header-inner">
-            <div class="logo-container">Autobon</div>
+            <div class="logo-area">
+                <div class="logo-container">Autobon</div>
+            </div>
             
-            <div class="flex items-center gap-5 ml-auto">
-                <div class="relative hide-mobile">
-                    <span class="absolute left-3 top-2.5 text-blue-500 text-xs">🔍</span>
-                    <input type="text" placeholder="Search here..." class="pl-9 pr-4 py-2 bg-gray-100 rounded-lg w-56 text-[11px] outline-none focus:ring-2 focus:ring-blue-100">
-                </div>
+            <nav class="nav-links-group hide-mobile">
+                <a href="#" class="nav-link">Buy Cars</a>
+                <a href="#" class="nav-link">Sell or Trade</a>
+                <a href="#" class="nav-link">Financing</a>
+            </nav>
+
+            <div class="profile-area hide-mobile">
+                <div class="h-6 w-px bg-gray-200"></div>
                 
-                <div class="flex items-center gap-1.5 text-[12px] font-medium cursor-pointer">
-                    <img src="https://flagcdn.com/w20/us.png" class="w-4" alt="US Flag"> 
-                    <span class="hide-mobile">Eng (US)</span> 
-                    <span class="text-[8px] hide-mobile">▼</span>
-                </div>
-                
-                <div class="flex items-center gap-3 border-l pl-5">
-                    <div class="text-right leading-tight hide-mobile">
-                        <p class="text-[12px] font-semibold">Irina</p>
-                        <p class="text-[10px] text-gray-400 uppercase">Admin</p>
+                <div class="flex items-center gap-3 cursor-pointer">
+                    <div class="text-right leading-tight">
+                        <p class="text-[14px] font-semibold text-gray-800">Alex</p>
                     </div>
-                    <img src="https://i.pravatar.cc/150?u=irina" class="w-8 h-8 lg:w-9 lg:h-9 rounded-full cursor-pointer border border-gray-200" alt="Profile">
+                    <div class="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm border border-blue-200 shrink-0">
+                        A
+                    </div>
                 </div>
             </div>
+
+            <div class="block lg:hidden text-2xl cursor-pointer">≡</div>
         </div>
     </header>
 
@@ -328,30 +301,26 @@
     </footer>
 
     <script>
-        // Dollar Comma Logic
         document.querySelectorAll('.dollar-format').forEach(input => {
             input.addEventListener('input', function(e) {
                 let value = e.target.value.replace(/,/g, '');
-                if (!isNaN(value) && value !== '') { 
-                    e.target.value = Number(value).toLocaleString('en-US'); 
-                } else { 
-                    e.target.value = ''; 
-                }
+                if (!isNaN(value) && value !== '') { e.target.value = Number(value).toLocaleString('en-US'); }
+                else { e.target.value = ''; }
                 this.classList.remove('error');
             });
         });
 
-        // Date Population
         window.onload = function() {
             const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            const monthSelect = document.getElementById('dobMonth'), daySelect = document.getElementById('dobDay'), yearSelect = document.getElementById('dobYear');
-            months.forEach((m, i) => { let opt = document.createElement('option'); opt.value = i + 1; opt.innerHTML = m; monthSelect.appendChild(opt); });
-            for (let d = 1; d <= 31; d++) { let opt = document.createElement('option'); opt.value = d; opt.innerHTML = d; daySelect.appendChild(opt); }
-            const currentYear = new Date().getFullYear();
-            for (let y = currentYear - 18; y >= 1950; y--) { let opt = document.createElement('option'); opt.value = y; opt.innerHTML = y; yearSelect.appendChild(opt); }
+            const m = document.getElementById('dobMonth'), d = document.getElementById('dobDay'), y = document.getElementById('dobYear');
+            if(m) months.forEach((name, i) => { let opt = document.createElement('option'); opt.value = i+1; opt.innerHTML = name; m.appendChild(opt); });
+            if(d) for(let i=1; i<=31; i++) { let opt = document.createElement('option'); opt.value = i; opt.innerHTML = i; d.appendChild(opt); }
+            if(y) {
+                const cur = new Date().getFullYear();
+                for(let i=cur-18; i>=1950; i--) { let opt = document.createElement('option'); opt.value = i; opt.innerHTML = i; y.appendChild(opt); }
+            }
         };
 
-        // Form Submit with Validation
         function handleSubmit(event) {
             event.preventDefault();
             const form = event.target;
@@ -364,11 +333,7 @@
                     input.classList.add('error');
                     if (!firstError) firstError = input;
                     isValid = false;
-                } else {
-                    input.classList.remove('error');
-                }
-                input.addEventListener('input', () => input.classList.remove('error'));
-                input.addEventListener('change', () => input.classList.remove('error'));
+                } else { input.classList.remove('error'); }
             });
 
             if (isValid) {
